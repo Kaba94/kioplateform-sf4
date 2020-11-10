@@ -1,0 +1,15 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}Back-Office{% endblock %}
+
+{% block content %}
+
+    <h1>Back-Office</h1>
+
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('admin_users') }}">User</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'admin/_template.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block content %}
+    <h1>Liste des utilisateurs</h1>
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Pseudo</th>
+            <th>Rôle</th>
+            <th>Setting</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.pseudo }}</td>
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role }}
+                        {% endfor %}
+                    </td>
+                    <td><a href="{{ path('admin_edit_user', {id: user.id}) }}" class="btn btn-info">Modifier</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

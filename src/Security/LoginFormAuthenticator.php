@@ -68,7 +68,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['username']])
-            ?? $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+            ?? $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -80,7 +80,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        $validPassword = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        if ($validPassword === false) {
+            throw new CustomUserMessageAuthenticationException('Mot de passe erroné.');
+        }
+
+        return true;
     }
 
     /**
