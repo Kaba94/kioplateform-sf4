@@ -42,6 +42,8 @@ class RegistrationController extends AbstractController
 
             $this->manager->persist($user);
             $this->manager->flush();
+
+            $this->addFlash('success', 'Vous êtes inscrit.');
             return $this->redirectToRoute('home');
 
         }

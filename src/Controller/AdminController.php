@@ -61,7 +61,7 @@ class AdminController extends AbstractController
             $user = $form->getData();
             $this->manager->flush();
 
-            $this->addFlash('message', 'Vos information on bien été modifiée !');
+            $this->addFlash('success', 'Vos information on bien été modifiée !');
             return $this->redirectToRoute('admin_users');
         }
         return $this->render('admin/edit_user.html.twig', [

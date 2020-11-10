@@ -1,0 +1,20 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Créer une Plateform
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Créer une Plateform</h1>
+
+        {{ form_start(plateformForm) }}
+
+        {{ form_row(plateformForm.nom, {label: "Nom de la plateform"}) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Créer
+        </button>
+        {{ form_end(plateformForm) }}
+    </div>
+{% endblock %}

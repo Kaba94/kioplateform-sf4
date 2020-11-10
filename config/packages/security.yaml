@@ -38,7 +38,7 @@ security:
         # additional security lives in the controllers
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/fil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/conseil, roles: ROLE_PROPRIETAIRE }
+        - { path: ^/gestion, roles: ROLE_PERSONNEL }
         - { path: ^/finance, roles: ROLE_PROPRIETAIRE }
         - { path: ^/style, roles: ROLE_ADMIN }
         - { path: ^/parametres, roles: ROLE_ADMIN }
