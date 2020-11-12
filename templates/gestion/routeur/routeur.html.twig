@@ -1,0 +1,38 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Routeur{% endblock %}
+
+{% block content %}
+
+    <h1>Liste des Routeur</h1>
+
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Nom</th>
+        </thead>
+        <tbody>
+            {% for routeur in routeurs %}
+                <tr>
+                    <td>{{ routeur.id }}</td>
+                    <td>{{ routeur.nom }}</td>
+                    <td><a href="{{ path('gestion_edit_routeur', {id: routeur.id}) }}" class="btn btn-info">Modifier</a></td>
+                    <td><a href="{{ path('gestion_remove_routeur', {id: routeur.id, token: csrf_token('gestion_remove_routeur')}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('gestion_create_routeur') }}">Créer un Routeur</a></li>
+        </ul>
+    </div>
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('gestion_prestation') }}">Ajouter un prix</a></li>
+        </ul>
+    </div>
+
+
+{% endblock %}

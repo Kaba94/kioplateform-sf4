@@ -1,0 +1,20 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Modifier une Routeur
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Modifier une Routeur</h1>
+
+        {{ form_start(routeurForm) }}
+
+        {{ form_row(routeurForm.nom, {label: "Nom du routeur"}) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Enregistrer
+        </button>
+        {{ form_end(routeurForm) }}
+    </div>
+{% endblock %}

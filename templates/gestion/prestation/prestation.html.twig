@@ -1,0 +1,19 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Prix routeur
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Prix du Routeur</h1>
+
+        {{ form_start(prestationForm) }}
+        {{ form_row(prestationForm) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Enregistrer
+        </button>
+        {{ form_end(prestationForm) }}
+    </div>
+{% endblock %}

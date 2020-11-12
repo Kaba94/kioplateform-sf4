@@ -3,8 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Plateform;
+use App\Entity\Prestation;
+use App\Entity\Routeur;
 use App\Form\PlateformFormType;
+use App\Form\PrestationFormType;
+use App\Form\RouteurFormType;
 use App\Repository\PlateformRepository;
+use App\Repository\PrestationRepository;
+use App\Repository\RouteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +25,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class GestionController extends AbstractController
 {
 
+    /*****PLATEFORM******/
+
     /**
      * Liste de toutes les plateform
      * @Route("/plateform", name="plateform")
      */
-    public function index(PlateformRepository $repository)
+    public function indexPlateform(PlateformRepository $repository)
     {
         return $this->render('gestion/plateform/plateform.html.twig', [
             'plateforms' => $repository->findAll(),
@@ -67,7 +75,7 @@ class GestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $manager->flush();
 
-            $this->addFlash('success', 'Le produit a été mis à jour.');
+            $this->addFlash('success', 'La plateform a été mis à jour.');
 
             return $this->redirectToRoute('gestion_plateform');
         }
@@ -98,4 +106,166 @@ class GestionController extends AbstractController
         // redirection
         return $this->redirectToRoute('gestion_plateform');
     }
+
+    /*****ROUTEUR*******/
+
+    /**
+     * Liste de tout les routeurs 
+     * @Route("/routeur", name="routeur")
+     */
+    public function indexRouteur(RouteurRepository $repository)
+    {
+        return $this->render('gestion/routeur/routeur.html.twig', [
+            'routeurs' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * Ajout d'un nouveau routeur
+     * @Route("/create_routeur", name="create_routeur")
+     */
+    public function createRouteur(EntityManagerInterface $manager, Request $request)
+    {
+        $form = $this->createForm(RouteurFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $routeur = $form->getData();
+
+            $manager->persist($routeur);
+            $manager->flush();
+
+            $this->addFlash('success', 'La routeur a été enregistré !');
+            return $this->redirectToRoute('gestion_routeur');
+        }
+
+        return $this->render('gestion/routeur/create_routeur.html.twig', [
+            'routeurForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Modifier un routeur
+     * @Route("/edit_routeur/{id}", name="edit_routeur")
+     */
+    public function editRouteur(EntityManagerInterface $manager, Routeur $routeur, Request $request)
+    {
+        $form = $this->createForm(RouteurFormType::class, $routeur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->flush();
+
+            $this->addFlash('success', 'Le routeur a été mis à jour.');
+
+            return $this->redirectToRoute('gestion_routeur');
+        }
+
+        return $this->render('gestion/routeur/edit_routeur.html.twig', [
+            'routeur' => $routeur,
+            'routeurForm' => $form->createView()
+        ]);
+    }
+
+   /**
+     * Suppression d'un routeur
+     * @Route ("/remove_routeur/{id}", name="remove_routeur")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function removeRouteur(Routeur $routeur, EntityManagerInterface $manager, Request $request)
+    {
+        // Récuparation du jeton csrf
+        $token = $request->query->get('token');
+
+        // Vérification de la validité de la clé 
+        if ($this->isCsrfTokenValid('gestion_remove_routeur', $token))
+        {
+            // Suppression
+            $manager->remove($routeur);
+            $manager->flush();
+        }
+        // redirection
+        return $this->redirectToRoute('gestion_routeur');
+    }
+
+    /**
+     * Ajouter un prix routeur/plateform
+     * @Route("/prestation", name="prestation")
+     */
+    public function prestation(Request $request, EntityManagerInterface $manager) 
+    { 
+
+        $prestation = new Prestation(); 
+        $form = $this->createForm(PrestationFormType::class, $prestation); 
+
+        $form->handleRequest($request); 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $prestation = $form->getData();
+            $manager->persist($prestation); 
+            $manager->flush(); 
+
+        return $this->redirectToRoute('gestion_list_prestation'); 
+        } 
+
+
+        return $this->render(
+        'gestion/prestation/prestation.html.twig', 
+        ['prestationForm' => $form->createView()]); 
+    }
+
+    /**
+     * Liste de tout les prix de routeur 
+     * @Route("/list_prestation", name="list_prestation")
+     */
+    public function indexPrestation(PrestationRepository $repository)
+    {
+        return $this->render('gestion/prestation/list_prestation.html.twig', [
+            'prestations' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * Modifier un prix
+     * @Route("/edit_prestation/{id}", name="edit_prestation")
+     */
+    public function editPrestation(EntityManagerInterface $manager, Prestation $prestation, Request $request)
+    {
+        $form = $this->createForm(PrestationFormType::class, $prestation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->flush();
+
+            $this->addFlash('success', 'Le prix a été mis à jour.');
+
+            return $this->redirectToRoute('gestion_list_prestation');
+        }
+
+        return $this->render('gestion/prestation/edit_prestation.html.twig', [
+            'prestation' => $prestation,
+            'prestationForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Suppression d'un prix
+     * @Route ("/remove_prestation/{id}", name="remove_prestation")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function removePrestation(Prestation $prestation, EntityManagerInterface $manager, Request $request)
+    {
+        // Récuparation du jeton csrf
+        $token = $request->query->get('token');
+
+        // Vérification de la validité de la clé 
+        if ($this->isCsrfTokenValid('gestion_remove_prestation', $token))
+        {
+            // Suppression
+            $manager->remove($prestation);
+            $manager->flush();
+        }
+        // redirection
+        return $this->redirectToRoute('gestion_list_prestation');
+    }
+
 }

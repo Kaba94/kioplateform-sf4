@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PlateformRepository;
+use App\Repository\RouteurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=PlateformRepository::class)
- * @UniqueEntity(fields={"nom"}, message="There is already an plateform with this name")
+ * @ORM\Entity(repositoryClass=RouteurRepository::class)
  */
-class Plateform
+class Routeur
 {
     /**
      * @ORM\Id
@@ -22,12 +20,12 @@ class Plateform
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Prestation::class, mappedBy="plateform")
+     * @ORM\OneToMany(targetEntity=Prestation::class, mappedBy="routeur")
      */
     private $prestations;
 
@@ -65,7 +63,7 @@ class Plateform
     {
         if (!$this->prestations->contains($prestation)) {
             $this->prestations[] = $prestation;
-            $prestation->setPlateform($this);
+            $prestation->setRouteur($this);
         }
 
         return $this;
@@ -75,8 +73,8 @@ class Plateform
     {
         if ($this->prestations->removeElement($prestation)) {
             // set the owning side to null (unless already changed)
-            if ($prestation->getPlateform() === $this) {
-                $prestation->setPlateform(null);
+            if ($prestation->getRouteur() === $this) {
+                $prestation->setRouteur(null);
             }
         }
 

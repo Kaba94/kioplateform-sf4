@@ -1,0 +1,36 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Tarrif Routeur{% endblock %}
+
+{% block content %}
+
+    <h1>Tarrif routeur</h1>
+
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Plateform</th>
+            <th>Routeur</th>
+            <th>Prix</th>
+        </thead>
+        <tbody>
+            {% for prestation in prestations %}
+                <tr>
+                    <td>{{ prestation.id }}</td>
+                    <td>{{ prestation.plateform.nom }}</td>
+                    <td>{{ prestation.routeur.nom }}</td>
+                    <td>{{ prestation.prix }}</td>
+                    <td><a href="{{ path('gestion_edit_prestation', {id: prestation.id}) }}" class="btn btn-info">Modifier</a></td>
+                    <td><a href="{{ path('gestion_remove_prestation', {id: prestation.id, token: csrf_token('gestion_remove_prestation')}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('gestion_prestation') }}">Ajouter un prix</a></li>
+        </ul>
+    </div>
+
+{% endblock %}
