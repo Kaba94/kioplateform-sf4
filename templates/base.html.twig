@@ -9,7 +9,10 @@
         {% endblock %}
     </head>
     <body>
+        <div id="wrapper">
         {% block body %}{% endblock %}
+        </div>
+        
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

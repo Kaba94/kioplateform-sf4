@@ -1,0 +1,32 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Creation d'un annonceur
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Créer un annonceur</h1>
+
+        {{ form_start(annonceurForm) }}
+        {{ form_row(annonceurForm.nom, {label: "Nom:"}) }}
+        {{ form_row(annonceurForm.nomDuContact, {label: "Nom et Prenom du contact:"}) }}
+        {{ form_row(annonceurForm.skypeDuContact, {label: "Skype du contact:"}) }}
+        {{ form_row(annonceurForm.emailDuContact, {label: "Email du contact:"}) }}
+        {{ form_row(annonceurForm.adresse, {label: "Adresse:"}) }}
+        {{ form_row(annonceurForm.codePostale, {label: "Code postale:"}) }}
+        {{ form_row(annonceurForm.ville, {label: "Ville:"}) }}
+        {{ form_row(annonceurForm.telephone, {label: "Telephone:"}) }}
+        {{ form_row(annonceurForm.numeroSiret, {label: "N° Siret:"}) }}
+        {{ form_row(annonceurForm.tva, {label: "TVA:"}) }}
+        {{ form_row(annonceurForm.emailComptabilite, {label: "Email comptabilité:"}) }}
+        {{ form_row(annonceurForm.contactComptabilite, {label: "Nom et prenom comptabilité:"}) }}
+        {{ form_row(annonceurForm.urlPlateform, {label: "URL plateform:"}) }}
+        {{ form_row(annonceurForm.mdpPlateform, {label: "MDP plateform:"}) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Enregistrer
+        </button>
+        {{ form_end(annonceurForm) }}
+    </div>
+{% endblock %}

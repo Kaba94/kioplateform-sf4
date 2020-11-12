@@ -26,6 +26,10 @@
         <a class="nav-link" href="{{ path('gestion_list_prestation') }}">Tarrif
         </a>
       </li>
+            <li class="nav-item">
+        <a class="nav-link" href="{{ path('gestion_annonceur') }}">Annonceur
+        </a>
+      </li>
 
       <li class="nav-item">
         {% if is_granted("ROLE_SUPERADMIN") %}

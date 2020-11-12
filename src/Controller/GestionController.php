@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Annonceur;
 use App\Entity\Plateform;
 use App\Entity\Prestation;
 use App\Entity\Routeur;
+use App\Form\AnnonceurFormType;
 use App\Form\PlateformFormType;
 use App\Form\PrestationFormType;
 use App\Form\RouteurFormType;
+use App\Repository\AnnonceurRepository;
 use App\Repository\PlateformRepository;
 use App\Repository\PrestationRepository;
 use App\Repository\RouteurRepository;
@@ -266,6 +269,89 @@ class GestionController extends AbstractController
         }
         // redirection
         return $this->redirectToRoute('gestion_list_prestation');
+    }
+
+
+    /******* ANNONCEUR *******/
+
+    /**
+     * Liste de tout les annonceur
+     * @Route("/annonceur", name="annonceur")
+     */
+    public function indexAnnonceur(AnnonceurRepository $repository)
+    {
+        return $this->render('gestion/annonceur/annonceur.html.twig', [
+            'annonceurs' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * Ajout d'un nouvel annonceur
+     * @Route("/create_annonceur", name="create_annonceur")
+     */
+    public function createAnnonceur(EntityManagerInterface $manager, Request $request)
+    {
+        $form = $this->createForm(AnnonceurFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $annonceur = $form->getData();
+
+            $manager->persist($annonceur);
+            $manager->flush();
+
+            $this->addFlash('success', 'L\'annonceur a été enregistré !');
+            return $this->redirectToRoute('gestion_annonceur');
+        }
+
+        return $this->render('gestion/annonceur/create_annonceur.html.twig', [
+            'annonceurForm' => $form->createView()
+        ]);
+       
+    }
+
+    /**
+     * Modifier un annonceur
+     * @Route("/edit_annonceur/{id}", name="edit_annonceur")
+     */
+    public function editAnnonceur(EntityManagerInterface $manager, Annonceur $annonceur, Request $request)
+    {
+        $form = $this->createForm(AnnonceurFormType::class, $annonceur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->flush();
+
+            $this->addFlash('success', 'L\'annonceur a été mis à jour.');
+
+            return $this->redirectToRoute('gestion_annonceur');
+        }
+
+        return $this->render('gestion/annonceur/edit_annonceur.html.twig', [
+            'annonceur' => $annonceur,
+            'annonceurForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Suppression d'un annonceur
+     * @Route ("/remove_annonceur/{id}", name="remove_annonceur")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function removeAnnonceur(Annonceur $annonceur, EntityManagerInterface $manager, Request $request)
+    {
+        // Récuparation du jeton csrf
+        $token = $request->query->get('token');
+
+        // Vérification de la validité de la clé 
+        if ($this->isCsrfTokenValid('gestion_remove_annonceur', $token))
+        {
+            // Suppression
+            $manager->remove($annonceur);
+            $manager->flush();
+        }
+        // redirection
+        return $this->redirectToRoute('gestion_annonceur');
     }
 
 }
