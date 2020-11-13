@@ -1,64 +1,133 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="{{ path('home') }}">Plateform</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('home') }}">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('gestion_plateform') }}">Plateform
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('gestion_routeur') }}">Routeur
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('gestion_list_prestation') }}">Tarrif
-        </a>
-      </li>
-            <li class="nav-item">
-        <a class="nav-link" href="{{ path('gestion_annonceur') }}">Annonceur
-        </a>
-      </li>
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>The DigitLabs</h3>
+        </div>
 
-      <li class="nav-item">
-        {% if is_granted("ROLE_SUPERADMIN") %}
-          <a class="nav-link" href="{{ path('admin_index') }}"> Back-Office
-          </a>
-        {% endif %}                       
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right mr-auto">
+        <ul class="list-unstyled components">
+            <a href="{{ path('home') }}">
+            <p>Acceuil</p>
+            </a>
+            <li class="active">
+                <a href="#plateform" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Plateform</a>
+                <ul class="collapse list-unstyled" id="plateform">
+                    <li>
+                        <a href="{{ path('gestion_plateform') }}">Liste des plateform</a>
+                    </li>
+                    <li>
+                        <a href="#">Créer des plateform</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#routeur" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Routeur</a>
+                <ul class="collapse list-unstyled" id="routeur">
+                    <li>
+                        <a href="{{ path('gestion_routeur') }}">Liste des routeurs</a>
+                    </li>
+                    <li>
+                        <a href="#">Créer un routeur</a>
+                    </li>
+                    <li>
+                        <a href="#">Fixer un prix</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="{{ path('gestion_list_prestation') }}">Liste Routeur/Platefom</a>
+            </li>
+            <li>
+                <a href="#annonceur" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Annonceur</a>
+                <ul class="collapse list-unstyled" id="annonceur">
+                    <li>
+                        <a href="{{ path('gestion_annonceur') }}">Liste des annonceurs</a>
+                    </li>
+                    <li>
+                        <a href="#">Créer un annonceur</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#campagne" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Campagne</a>
+                <ul class="collapse list-unstyled" id="campagne">
+                    <li>
+                        <a href="#">Liste des campagne</a>
+                    </li>
+                    <li>
+                        <a href="#">Créer un campagne</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#base" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Base</a>
+                <ul class="collapse list-unstyled" id="base">
+                    <li>
+                        <a href="#">Liste des Bases</a>
+                    </li>
+                    <li>
+                        <a href="#">Créer une base</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+            <hr>
+            <li>
+                {% if is_granted("ROLE_SUPERADMIN") %}
+                <a class="nav-link" href="{{ path('admin_index') }}"> Back-Office
+                </a>
+                {% endif %}                       
+            </li>
+            <hr>
+            {% if app.user %}
+                <li>
+                <a href="{{ path('app_profile') }}">
+                 <span class="icon"><i class="fas fa-user-circle"></i></span>
+                {{ app.user.pseudo }}
+                </a>
+                </li>
+                <li>
+                <a href="{{ path('app_logout') }}">Deconexion</a>
+                </li>
+            {% else %}
+                <li>
+                <a href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                <li>
+                <a href="{{ path('app_login') }}">conexion</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
 
-      {% if app.user %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_logout') }}">Deconexion</a>
-      </li>
-            <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_profile') }}">{{ app.user.pseudo }}</a>
-      </li>
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Masquer</span>
+                </button>
 
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_login') }}">conexion</a>
-      </li>
-      {% endif %}
-    </ul>
-</nav>
-<div class="container">
+            </div>
+        </nav>
+    </div>
+        <div class="container">
     {% block content %}{% endblock %}
-</div>
+        </div>
  {% endblock %}

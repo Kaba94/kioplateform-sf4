@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Twig\Extra\Intl\IntlExtension;
 
 /**
  * @IsGranted("ROLE_PERSONNEL")
@@ -27,6 +28,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class GestionController extends AbstractController
 {
+
+    
+
+    
 
     /*****PLATEFORM******/
 
@@ -280,6 +285,7 @@ class GestionController extends AbstractController
      */
     public function indexAnnonceur(AnnonceurRepository $repository)
     {
+        
         return $this->render('gestion/annonceur/annonceur.html.twig', [
             'annonceurs' => $repository->findAll(),
         ]);

@@ -9,6 +9,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=AnnonceurRepository::class)
  * @UniqueEntity(fields={"nom"}, message="There is already an annonceur with this name")
+ * @UniqueEntity(fields={"skypeDuContact"}, message="There is already an skype with this name")
+ * @UniqueEntity(fields={"emailDuContact"}, message="There is already an email with this name")
  */
 class Annonceur
 {

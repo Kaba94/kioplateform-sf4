@@ -37,11 +37,11 @@
                     <td>{{ annonceur.ville }}</td>
                     <td>{{ annonceur.telephone }}</td>
                     <td>{{ annonceur.numeroSiret }}</td>
-                    <td>{{ annonceur.tva }}</td>
+                    <td>{{ annonceur.tva | number_format }}%</td>
                     <td>{{ annonceur.emailComptabilite }}</td>
                     <td>{{ annonceur.contactComptabilite }}</td>
                     <td>
-                        <a href="{{ annonceur.urlPlateform }}">
+                        <a href="{{ annonceur.urlPlateform }}" target="_blank">
                             {{ annonceur.urlPlateform }}
                         </a>
                     </td>
