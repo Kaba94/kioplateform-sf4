@@ -1,0 +1,47 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Campagnes{% endblock %}
+
+{% block content %}
+
+    <h1>Liste des campagnes</h1>
+
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Rémunération</th>
+            <th>Type derémunération</th>
+            <th>Annonceur</th>
+            <th>Test</th>
+        </thead>
+        <tbody>
+            {% for campagne in campagnes %}
+                <tr>
+                    <td>{{ campagne.id }}</td>
+                    <td>{{ campagne.nom }}</td>
+                    <td>{{ campagne.remuneration / 100}}</td>
+                    <td>{{ campagne.typeDeRemuneration }}</td> 
+                    <td>{{ campagne.annonceur.nom }}</td>                  
+                    <td>
+                            {% if campagne.test == "1" %}
+                                oui
+                            {% else %}
+                                non
+                            {% endif %}
+                    </td>
+                    <td><a href="{{ path('gestion_edit_campagne', {id: campagne.id}) }}" class="btn btn-info">Modifier</a></td>
+                    <td><a href="{{ path('gestion_remove_campagne', {id: campagne.id, token: csrf_token('gestion_remove_campagne')}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('gestion_create_campagne') }}">Créer un annonceur</a></li>
+        </ul>
+    </div>
+
+
+{% endblock %}

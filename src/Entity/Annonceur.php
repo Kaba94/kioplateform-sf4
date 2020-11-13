@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnonceurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -90,6 +92,16 @@ class Annonceur
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mdpPlateform;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Campagne::class, mappedBy="annonceur")
+     */
+    private $campagnes;
+
+    public function __construct()
+    {
+        $this->campagnes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -260,6 +272,36 @@ class Annonceur
     public function setMdpPlateform(?string $mdpPlateform): self
     {
         $this->mdpPlateform = $mdpPlateform;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Campagne[]
+     */
+    public function getCampagnes(): Collection
+    {
+        return $this->campagnes;
+    }
+
+    public function addCampagne(Campagne $campagne): self
+    {
+        if (!$this->campagnes->contains($campagne)) {
+            $this->campagnes[] = $campagne;
+            $campagne->setAnnonceur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCampagne(Campagne $campagne): self
+    {
+        if ($this->campagnes->removeElement($campagne)) {
+            // set the owning side to null (unless already changed)
+            if ($campagne->getAnnonceur() === $this) {
+                $campagne->setAnnonceur(null);
+            }
+        }
 
         return $this;
     }

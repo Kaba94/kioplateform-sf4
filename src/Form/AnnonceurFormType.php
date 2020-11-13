@@ -67,7 +67,9 @@ class AnnonceurFormType extends AbstractType
                     new NotBlank(['message' => 'Le champ nom est manquant.']),
                     new Length([
                         'max' => 5,
-                        'maxMessage' => 'Le code postale ne peut contenir plus de {{ limit }} chiffres.'
+                        'maxMessage' => 'Le code postale doit contenir {{ limit }} chiffres.',
+                        'min' => 5,
+                        'minMessage' => 'Le code postale doit contenir {{ limit }} chiffres.',
                     ])
                 ]
             ])

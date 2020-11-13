@@ -1,0 +1,24 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Créer une Campagne
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Créer une Campagne</h1>
+
+        {{ form_start(campagneForm) }}
+
+        {{ form_row(campagneForm.nom, {label: "Nom de la Campagne"}) }}
+        {{ form_row(campagneForm.remuneration, {label: "Rémunération", attr: {placeholder: "(160 = 1.60€, 16 = 0.16€)"}}) }}
+        {{ form_row(campagneForm.typeDeRemuneration) }}
+        {{ form_row(campagneForm.annonceur) }}
+        {{ form_row(campagneForm.test) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Créer
+        </button>
+        {{ form_end(campagneForm) }}
+    </div>
+{% endblock %}

@@ -9,7 +9,10 @@
         <h1 class="title">Prix du Routeur</h1>
 
         {{ form_start(prestationForm) }}
-        {{ form_row(prestationForm) }}
+
+        {{ form_row(prestationForm.prix) }}
+        {{ form_row(prestationForm.routeur) }}
+        {{ form_row(prestationForm.plateform) }}
 
         <button type="submit" class="btn btn-primary fullwidth">
             Enregistrer

@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Annonceur;
+use App\Entity\Campagne;
 use App\Entity\Plateform;
 use App\Entity\Prestation;
 use App\Entity\Routeur;
 use App\Form\AnnonceurFormType;
+use App\Form\CampagneFormType;
 use App\Form\PlateformFormType;
 use App\Form\PrestationFormType;
 use App\Form\RouteurFormType;
 use App\Repository\AnnonceurRepository;
+use App\Repository\CampagneRepository;
 use App\Repository\PlateformRepository;
 use App\Repository\PrestationRepository;
 use App\Repository\RouteurRepository;
@@ -359,5 +362,88 @@ class GestionController extends AbstractController
         // redirection
         return $this->redirectToRoute('gestion_annonceur');
     }
+
+    /********* CAMPAGNE **********/
+
+    /**
+     * Liste de tout les campagne
+     * @Route("/campagne", name="campagne")
+     */
+    public function indexCampagne(CampagneRepository $repository)
+    {
+        
+        return $this->render('gestion/campagne/campagne.html.twig', [
+            'campagnes' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * Ajout d'un nouvel campagne
+     * @Route("/create_campagne", name="create_campagne")
+     */
+    public function createCampagne(EntityManagerInterface $manager, Request $request)
+    {
+        $form = $this->createForm(CampagneFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $campagne = $form->getData();
+
+            $manager->persist($campagne);
+            $manager->flush();
+
+            $this->addFlash('success', 'La campagne a été enregistré !');
+            return $this->redirectToRoute('gestion_campagne');
+        }
+
+        return $this->render('gestion/campagne/create_campagne.html.twig', [
+            'campagneForm' => $form->createView()
+        ]);
+       
+    }
+
+    /**
+     * Modifier une campagne
+     * @Route("/edit_campagne/{id}", name="edit_campagne")
+     */
+    public function editCampagne(EntityManagerInterface $manager, Campagne $campagne, Request $request)
+    {
+        $form = $this->createForm(CampagneFormType::class, $campagne);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->flush();
+
+            $this->addFlash('success', 'La campagne');
+            return $this->redirectToRoute('gestion_campagne');
+        }
+
+        return $this->render('gestion/campagne/edit_campagne.html.twig', [
+            'campagne' => $campagne,
+            'campagneForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Suppression d'une campagne
+     * @Route ("/remove_campagne/{id}", name="remove_campagne")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function removeCampagne(Campagne $campagne, EntityManagerInterface $manager, Request $request)
+    {
+        // Récuparation du jeton csrf
+        $token = $request->query->get('token');
+
+        // Vérification de la validité de la clé 
+        if ($this->isCsrfTokenValid('gestion_remove_campagne', $token))
+        {
+            // Suppression
+            $manager->remove($campagne);
+            $manager->flush();
+        }
+        // redirection
+        return $this->redirectToRoute('gestion_campagne');
+    }
+
 
 }

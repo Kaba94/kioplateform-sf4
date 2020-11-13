@@ -19,7 +19,7 @@
                     <td>{{ prestation.id }}</td>
                     <td>{{ prestation.plateform.nom }}</td>
                     <td>{{ prestation.routeur.nom }}</td>
-                    <td>{{ prestation.prix | number_format(3, '.', ' ') / 100}}</td>
+                    <td>{{ prestation.prix / 100}}</td>
                     <td><a href="{{ path('gestion_edit_prestation', {id: prestation.id}) }}" class="btn btn-info">Modifier</a></td>
                     <td><a href="{{ path('gestion_remove_prestation', {id: prestation.id, token: csrf_token('gestion_remove_prestation')}) }}" class="btn btn-danger">Supprimer</a></td>
                 </tr>

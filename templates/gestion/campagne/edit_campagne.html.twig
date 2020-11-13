@@ -1,0 +1,24 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Modifier une Campagne
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Modifier une Campagne</h1>
+
+        {{ form_start(campagneForm) }}
+
+        {{ form_row(campagneForm.nom, {label: "Nom de la Campagne"}) }}
+        {{ form_row(campagneForm.remuneration, {label: "Rémunération"}) }}
+        {{ form_row(campagneForm.typeDeRemuneration) }}
+        {{ form_row(campagneForm.annonceur) }}
+        {{ form_row(campagneForm.test) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Enregistrer
+        </button>
+        {{ form_end(campagneForm) }}
+    </div>
+{% endblock %}
