@@ -1,0 +1,37 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Bases{% endblock %}
+
+{% block content %}
+
+    <h1>Listes des Bases</h1>
+
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Routeur</th>
+            <th>Plateform</th>
+        </thead>
+        <tbody>
+            {% for base in bases %}
+                <tr>
+                    <td>{{ base.id }}</td>
+                    <td>{{ base.nom }}</td>
+                    <td>{{ base.routeur.nom }}</td>                  
+                    <td>{{ base.plateform.nom }}</td>                  
+                    <td><a href="{{ path('gestion_edit_base', {id: base.id}) }}" class="btn btn-info">Modifier</a></td>
+                    <td><a href="{{ path('gestion_remove_base', {id: base.id, token: csrf_token('gestion_remove_base')}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="box">
+        <ul>
+            <li><a class="btn btn-primary" href="{{ path('gestion_create_base') }}">Créer une base</a></li>
+        </ul>
+    </div>
+
+
+{% endblock %}

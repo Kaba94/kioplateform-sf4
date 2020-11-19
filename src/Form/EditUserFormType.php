@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Plateform;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -60,6 +62,13 @@ class EditUserFormType extends AbstractType
             'multiple' => true,
             'label' => 'Rôles'
             ])
+            ->add('plateforms', EntityType::class, [
+                'class' => 'App\Entity\Plateform', 
+                'choice_label' => 'nom',
+                'expanded' => true,
+                'multiple' => true,
+                'by_reference' => false
+             ]);
         ;
     }
 

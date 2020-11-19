@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Annonceur;
+use App\Entity\Base;
 use App\Entity\Campagne;
 use App\Entity\Plateform;
 use App\Entity\Prestation;
 use App\Entity\Routeur;
 use App\Form\AnnonceurFormType;
+use App\Form\BaseFormType;
 use App\Form\CampagneFormType;
 use App\Form\PlateformFormType;
 use App\Form\PrestationFormType;
 use App\Form\RouteurFormType;
 use App\Repository\AnnonceurRepository;
+use App\Repository\BaseRepository;
 use App\Repository\CampagneRepository;
 use App\Repository\PlateformRepository;
 use App\Repository\PrestationRepository;
@@ -295,6 +298,16 @@ class GestionController extends AbstractController
     }
 
     /**
+     * Page d'un annonceur
+     * @Route("/annonceur_page/{id}", name="annonceur_page")
+     */
+    public function annonceurPage(Annonceur $annonceur){
+        return $this->render('gestion/annonceur/annonceur_page.html.twig', [
+            'annonceur' => $annonceur
+        ]);
+    }
+
+    /**
      * Ajout d'un nouvel annonceur
      * @Route("/create_annonceur", name="create_annonceur")
      */
@@ -443,6 +456,88 @@ class GestionController extends AbstractController
         }
         // redirection
         return $this->redirectToRoute('gestion_campagne');
+    }
+
+    /********* BASE ***********/
+
+    /**
+     * Liste de tout les bases
+     * @Route("/base", name="base")
+     */
+    public function indexBase(BaseRepository $repository)
+    {
+        
+        return $this->render('gestion/base/base.html.twig', [
+            'bases' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * Ajout d'un nouvelle base
+     * @Route("/create_base", name="create_base")
+     */
+    public function createBase(EntityManagerInterface $manager, Request $request)
+    {
+        $form = $this->createForm(BaseFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $base = $form->getData();
+
+            $manager->persist($base);
+            $manager->flush();
+
+            $this->addFlash('success', 'La base a été enregistré !');
+            return $this->redirectToRoute('gestion_base');
+        }
+
+        return $this->render('gestion/base/create_base.html.twig', [
+            'baseForm' => $form->createView()
+        ]);
+       
+    }
+
+    /**
+     * Modifier une base
+     * @Route("/edit_base/{id}", name="edit_base")
+     */
+    public function editBase(EntityManagerInterface $manager, Base $base, Request $request)
+    {
+        $form = $this->createForm(BaseFormType::class, $base);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->flush();
+
+            $this->addFlash('success', 'La base');
+            return $this->redirectToRoute('gestion_base');
+        }
+
+        return $this->render('gestion/base/edit_base.html.twig', [
+            'base' => $base,
+            'baseForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Suppression d'une base
+     * @Route ("/remove_base/{id}", name="remove_base")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function removeBase(Base $base, EntityManagerInterface $manager, Request $request)
+    {
+        // Récuparation du jeton csrf
+        $token = $request->query->get('token');
+
+        // Vérification de la validité de la clé 
+        if ($this->isCsrfTokenValid('gestion_remove_base', $token))
+        {
+            // Suppression
+            $manager->remove($base);
+            $manager->flush();
+        }
+        // redirection
+        return $this->redirectToRoute('gestion_base');
     }
 
 

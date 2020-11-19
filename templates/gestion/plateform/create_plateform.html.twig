@@ -12,6 +12,9 @@
 
         {{ form_row(plateformForm.nom, {label: "Nom de la plateform"}) }}
 
+        {# {% if is_granted("ROLE_SUPERADMIN") %}
+        {{ form_row(plateformForm.user, {label: "Utilisateur"}) }}
+        {% endif %} #}
         <button type="submit" class="btn btn-primary fullwidth">
             Créer
         </button>

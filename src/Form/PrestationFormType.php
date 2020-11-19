@@ -12,7 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 use App\Entity\Routeur;
-
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PrestationFormType extends AbstractType
 {
@@ -21,9 +22,11 @@ class PrestationFormType extends AbstractType
         $builder
         ->add('prix', MoneyType::class, [
             'invalid_message' => "Veuillez indiquer un prix.",
+            'scale' => 5,
             'constraints' => [
                 new NotBlank(['message' => 'Le champ prix est manquant.']),
-                new Positive(['message' => 'Le prix doit être positif.'])
+                new PositiveOrZero(['message' => 'Le prix ne peut pas être négatif.']),
+                new Regex( array( 'pattern' => '/[0-9]{1,}\.[0-9]{5}/')),
             ]
         ])
         ->add('routeur', EntityType::class, [

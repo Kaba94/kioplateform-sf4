@@ -11,7 +11,7 @@
             <a href="{{ path('home') }}">
             <p>Acceuil</p>
             </a>
-            <li class="active">
+            <li>
                 <a href="#plateform" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Plateform</a>
                 <ul class="collapse list-unstyled" id="plateform">
                     <li>
@@ -74,10 +74,10 @@
                 <a href="#base" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Base</a>
                 <ul class="collapse list-unstyled" id="base">
                     <li>
-                        <a href="#">Liste des Bases</a>
+                        <a href="{{ path('gestion_base') }}">Liste des Bases</a>
                     </li>
                     <li>
-                        <a href="#">Créer une base</a>
+                        <a href="{{ path('gestion_create_base') }}">Créer une base</a>
                     </li>
                     <li>
                         <a href="#">Page 3</a>
@@ -88,22 +88,24 @@
                 <a href="#">Contact</a>
             </li>
             <hr>
-            <li>
                 {% if is_granted("ROLE_SUPERADMIN") %}
+            <li>
                 <a class="nav-link" href="{{ path('admin_index') }}"> Back-Office
                 </a>
-                {% endif %}                       
             </li>
             <hr>
+                {% endif %}                       
             {% if app.user %}
                 <li>
-                <a href="{{ path('app_profile') }}">
-                 <span class="icon"><i class="fas fa-user-circle"></i></span>
-                {{ app.user.pseudo }}
-                </a>
+                    <a href="{{ path('app_profile') }}">
+                        <span class="icon">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                        {{ app.user.pseudo }}
+                    </a>
                 </li>
                 <li>
-                <a href="{{ path('app_logout') }}">Deconexion</a>
+                    <a href="{{ path('app_logout') }}">Deconexion</a>
                 </li>
             {% else %}
                 <li>

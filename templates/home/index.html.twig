@@ -1,5 +1,32 @@
 {% extends "_template.html.twig" %}
-
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+    <style>
+        #calendrier{
+            width: 100%
+        }
+    </style>
+{% endblock %}
 {% block content %}
-    <h1 class="title">Page d'acceuil</h1>
+<h1>Planning</h1>
+<div id="calendrier"></div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js" integrity="sha256-oenhI3DRqaPoTMAVBBzQUjOKPEdbdFFtTCNIosGwro0=" crossorigin="anonymous"></script>
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendrier');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale: 'fr',
+          timeZone: 'Europe/Paris',
+          headerToolbar: {
+              start: 'prev,next',
+              center: 'title',
+              end: 'dayGridMonth,timeGridWeek'
+          }
+        });
+        calendar.render();
+      });
+    </script>
 {% endblock %}

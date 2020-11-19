@@ -1,0 +1,21 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}
+    Modifier une Base
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1 class="title">Modifier une Base</h1>
+
+        {{ form_start(baseForm) }}
+
+        {{ form_row(baseForm.nom, {label: "Nom de la Base"}) }}
+        {{ form_row(baseForm.routeur}) }}
+
+        <button type="submit" class="btn btn-primary fullwidth">
+            Enregistrer
+        </button>
+        {{ form_end(baseForm) }}
+    </div>
+{% endblock %}

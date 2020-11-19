@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -41,6 +43,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $pseudo;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Plateform::class, mappedBy="user")
+     */
+    private $plateforms;
+
+    public function __construct()
+    {
+        $this->plateforms = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -128,6 +140,33 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plateform[]
+     */
+    public function getPlateforms(): Collection
+    {
+        return $this->plateforms;
+    }
+
+    public function addPlateform(Plateform $plateform): self
+    {
+        if (!$this->plateforms->contains($plateform)) {
+            $this->plateforms[] = $plateform;
+            $plateform->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlateform(Plateform $plateform): self
+    {
+        if ($this->plateforms->removeElement($plateform)) {
+            $plateform->removeUser($this);
+        }
 
         return $this;
     }

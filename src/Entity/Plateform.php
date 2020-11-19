@@ -31,9 +31,21 @@ class Plateform
      */
     private $prestations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="plateforms")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Base::class, mappedBy="plateform")
+     */
+    private $base;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->base = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +89,60 @@ class Plateform
             // set the owning side to null (unless already changed)
             if ($prestation->getPlateform() === $this) {
                 $prestation->setPlateform(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Base[]
+     */
+    public function getBase(): Collection
+    {
+        return $this->base;
+    }
+
+    public function addBase(Base $base): self
+    {
+        if (!$this->base->contains($base)) {
+            $this->base[] = $base;
+            $base->setPlateform($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBase(Base $base): self
+    {
+        if ($this->base->removeElement($base)) {
+            // set the owning side to null (unless already changed)
+            if ($base->getPlateform() === $this) {
+                $base->setPlateform(null);
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Plateform;
 use App\Entity\User;
 use App\Form\EditUserFormType;
 use App\Repository\UserRepository;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Seule le Super admin aura accés à ces routes
@@ -28,7 +30,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("", name="index")
+     * @Route("/", name="index")
      */
     public function index(): Response
     {
@@ -50,16 +52,18 @@ class AdminController extends AbstractController
 
     /**
      * Modifier un utilisateur
+     * @ParamConverter("plateform", options={"id" = "plateform_id"})
      * @Route("/edit_user/{id}", name="edit_user")
      */
-    public function editUser(User $user, Request $request){
+    public function editUser(User $user, Request $request, EntityManagerInterface $manager){
         $form = $this->createform(EditUserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération des données de formulaire (entité User + mot de passe)
+            // Récupération des données de formulaire (entité User)
             $user = $form->getData();
-            $this->manager->flush();
+            $manager->persist($user);
+            $manager->flush();
 
             $this->addFlash('success', 'Vos information on bien été modifiée !');
             return $this->redirectToRoute('admin_users');

@@ -29,9 +29,15 @@ class Routeur
      */
     private $prestations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Base::class, mappedBy="routeur")
+     */
+    private $bases;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
+        $this->bases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class Routeur
             // set the owning side to null (unless already changed)
             if ($prestation->getRouteur() === $this) {
                 $prestation->setRouteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Base[]
+     */
+    public function getBases(): Collection
+    {
+        return $this->bases;
+    }
+
+    public function addBasis(Base $basis): self
+    {
+        if (!$this->bases->contains($basis)) {
+            $this->bases[] = $basis;
+            $basis->setRouteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasis(Base $basis): self
+    {
+        if ($this->bases->removeElement($basis)) {
+            // set the owning side to null (unless already changed)
+            if ($basis->getRouteur() === $this) {
+                $basis->setRouteur(null);
             }
         }
 

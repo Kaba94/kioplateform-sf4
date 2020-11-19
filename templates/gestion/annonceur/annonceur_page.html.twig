@@ -1,0 +1,30 @@
+{% extends "_template.html.twig" %}
+
+{% block title %}
+{{ annonceur.nom }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="section">
+        <h1 class="title">{{ annonceur.nom }}</h1><hr>
+                    <p>{{ annonceur.nomDuContact }}</p>
+                    <p>{{ annonceur.skypeDuContact }}</p>
+                    <p>{{ annonceur.emailDuContact}}</p>
+                    <p>{{ annonceur.adresse }}</p>
+                    <p>{{ annonceur.codePostale }}</p>
+                    <p>{{ annonceur.ville }}</p>
+                    <p>{{ annonceur.telephone }}</p>
+                    <p>{{ annonceur.numeroSiret }}</p>
+                    <p>{{ annonceur.tva | number_format }}%</p>
+                    <p>{{ annonceur.emailComptabilite }}</p>
+                    <p>{{ annonceur.contactComptabilite }}</p>
+                    <p>
+                        <a href="{{ annonceur.urlPlateform }}" target="_blank">
+                            {{ annonceur.urlPlateform }}
+                        </a>
+                    </p>
+                    <p >{{ annonceur.mdpPlateform }}</p>
+                    
+    </div>
+{% endblock %}

@@ -10,7 +10,7 @@
 
         {{ form_start(prestationForm) }}
 
-        {{ form_row(prestationForm.prix) }}
+        {{ form_row(prestationForm.prix, {attr: {placeholder: "(160 = 1.60€, 16 = 0.16€)"}}) }}
         {{ form_row(prestationForm.routeur) }}
         {{ form_row(prestationForm.plateform) }}
 

@@ -3,50 +3,45 @@
 {% block title %}Annonceur{% endblock %}
 
 {% block content %}
+<style>
+    td {
+        font-size: 16px
+    }
+    th {
+        font-size: 12px
+    }
+</style>
 
     <h1>Liste des annonceurs</h1>
 
     <table class="table">
         <thead>
-            <th>ID</th>
             <th>Nom</th>
             <th>Nom du contact</th>
             <th>Skype du contact</th>
-            <th>Email du contact</th>
             <th>Adresse</th>
-            <th>Code postale</th>
-            <th>Ville</th>
             <th>Telephone</th>
-            <th>n° siret</th>
-            <th>Tva</th>
             <th>Email comptabilité</th>
-            <th>Nom comptabilité</th>
             <th>URL plateform</th>
             <th>MDP plateform</th>
         </thead>
         <tbody>
             {% for annonceur in annonceurs %}
                 <tr>
-                    <td>{{ annonceur.id }}</td>
                     <td>{{ annonceur.nom }}</td>
                     <td>{{ annonceur.nomDuContact }}</td>
                     <td>{{ annonceur.skypeDuContact }}</td>
-                    <td>{{ annonceur.emailDuContact}}</td>
                     <td>{{ annonceur.adresse }}</td>
-                    <td>{{ annonceur.codePostale }}</td>
-                    <td>{{ annonceur.ville }}</td>
                     <td>{{ annonceur.telephone }}</td>
-                    <td>{{ annonceur.numeroSiret }}</td>
-                    <td>{{ annonceur.tva | number_format }}%</td>
                     <td>{{ annonceur.emailComptabilite }}</td>
-                    <td>{{ annonceur.contactComptabilite }}</td>
                     <td>
                         <a href="{{ annonceur.urlPlateform }}" target="_blank">
                             {{ annonceur.urlPlateform }}
                         </a>
                     </td>
                     
-                    <td>{{ annonceur.mdpPlateform }}</td>
+                    <td type="password">{{ annonceur.mdpPlateform }}</td>
+                    <td><a href="{{ path('gestion_annonceur_page', {id: annonceur.id}) }}" class="btn btn-info">Détail</a></td>
                     <td><a href="{{ path('gestion_edit_annonceur', {id: annonceur.id}) }}" class="btn btn-info">Modifier</a></td>
                     <td><a href="{{ path('gestion_remove_annonceur', {id: annonceur.id, token: csrf_token('gestion_remove_annonceur')}) }}" class="btn btn-danger">Supprimer</a></td>
                 </tr>
