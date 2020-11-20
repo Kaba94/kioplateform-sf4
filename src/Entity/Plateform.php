@@ -41,11 +41,17 @@ class Plateform
      */
     private $base;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Shoot::class, mappedBy="plateform")
+     */
+    private $shoots;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
         $this->user = new ArrayCollection();
         $this->base = new ArrayCollection();
+        $this->shoots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +149,36 @@ class Plateform
             // set the owning side to null (unless already changed)
             if ($base->getPlateform() === $this) {
                 $base->setPlateform(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shoot[]
+     */
+    public function getShoots(): Collection
+    {
+        return $this->shoots;
+    }
+
+    public function addShoot(Shoot $shoot): self
+    {
+        if (!$this->shoots->contains($shoot)) {
+            $this->shoots[] = $shoot;
+            $shoot->setPlateform($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoot(Shoot $shoot): self
+    {
+        if ($this->shoots->removeElement($shoot)) {
+            // set the owning side to null (unless already changed)
+            if ($shoot->getPlateform() === $this) {
+                $shoot->setPlateform(null);
             }
         }
 

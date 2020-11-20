@@ -34,10 +34,16 @@ class Routeur
      */
     private $bases;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Shoot::class, mappedBy="routeur")
+     */
+    private $shoots;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
         $this->bases = new ArrayCollection();
+        $this->shoots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +117,36 @@ class Routeur
             // set the owning side to null (unless already changed)
             if ($basis->getRouteur() === $this) {
                 $basis->setRouteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shoot[]
+     */
+    public function getShoots(): Collection
+    {
+        return $this->shoots;
+    }
+
+    public function addShoot(Shoot $shoot): self
+    {
+        if (!$this->shoots->contains($shoot)) {
+            $this->shoots[] = $shoot;
+            $shoot->setRouteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoot(Shoot $shoot): self
+    {
+        if ($this->shoots->removeElement($shoot)) {
+            // set the owning side to null (unless already changed)
+            if ($shoot->getRouteur() === $this) {
+                $shoot->setRouteur(null);
             }
         }
 

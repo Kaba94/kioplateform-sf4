@@ -23,10 +23,10 @@ class PrestationFormType extends AbstractType
         ->add('prix', MoneyType::class, [
             'invalid_message' => "Veuillez indiquer un prix.",
             'scale' => 5,
+            'divisor' => 1000,
             'constraints' => [
                 new NotBlank(['message' => 'Le champ prix est manquant.']),
                 new PositiveOrZero(['message' => 'Le prix ne peut pas être négatif.']),
-                new Regex( array( 'pattern' => '/[0-9]{1,}\.[0-9]{5}/')),
             ]
         ])
         ->add('routeur', EntityType::class, [

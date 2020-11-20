@@ -1,0 +1,11 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Programmer{% endblock %}
+
+{% block content %}
+    <h1>Programmer</h1>
+
+    {{ include('shoot/_form.html.twig') }}
+
+    <a class="btn btn-primary mt-1" href="{{ path('shoot_index') }}">Retour</a>
+{% endblock %}

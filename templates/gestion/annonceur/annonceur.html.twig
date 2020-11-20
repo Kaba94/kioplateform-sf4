@@ -14,7 +14,7 @@
 
     <h1>Liste des annonceurs</h1>
 
-    <table class="table">
+    <table class="table table-condensed table-striped">
         <thead>
             <th>Nom</th>
             <th>Nom du contact</th>
@@ -41,17 +41,15 @@
                     </td>
                     
                     <td type="password">{{ annonceur.mdpPlateform }}</td>
-                    <td><a href="{{ path('gestion_annonceur_page', {id: annonceur.id}) }}" class="btn btn-info">Détail</a></td>
-                    <td><a href="{{ path('gestion_edit_annonceur', {id: annonceur.id}) }}" class="btn btn-info">Modifier</a></td>
+                    <td>
+                        <a href="{{ path('gestion_annonceur_page', {id: annonceur.id}) }}" class="btn btn-primary">Détail</a>
+                        <a href="{{ path('gestion_edit_annonceur', {id: annonceur.id}) }}" class="btn btn-primary mt-1">Modifier</a>
+                    </td>
                     <td><a href="{{ path('gestion_remove_annonceur', {id: annonceur.id, token: csrf_token('gestion_remove_annonceur')}) }}" class="btn btn-danger">Supprimer</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <div class="box">
-        <ul>
-            <li><a class="btn btn-primary" href="{{ path('gestion_create_annonceur') }}">Créer un annonceur</a></li>
-        </ul>
-    </div>
+            <a class="btn btn-primary" href="{{ path('gestion_create_annonceur') }}">Créer un annonceur</a>
 {% endblock %}

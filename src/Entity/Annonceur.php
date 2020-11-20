@@ -98,9 +98,15 @@ class Annonceur
      */
     private $campagnes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Shoot::class, mappedBy="annonceur")
+     */
+    private $shoots;
+
     public function __construct()
     {
         $this->campagnes = new ArrayCollection();
+        $this->shoots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -300,6 +306,36 @@ class Annonceur
             // set the owning side to null (unless already changed)
             if ($campagne->getAnnonceur() === $this) {
                 $campagne->setAnnonceur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shoot[]
+     */
+    public function getShoots(): Collection
+    {
+        return $this->shoots;
+    }
+
+    public function addShoot(Shoot $shoot): self
+    {
+        if (!$this->shoots->contains($shoot)) {
+            $this->shoots[] = $shoot;
+            $shoot->setAnnonceur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoot(Shoot $shoot): self
+    {
+        if ($this->shoots->removeElement($shoot)) {
+            // set the owning side to null (unless already changed)
+            if ($shoot->getAnnonceur() === $this) {
+                $shoot->setAnnonceur(null);
             }
         }
 

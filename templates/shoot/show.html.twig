@@ -1,0 +1,54 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Shoot{% endblock %}
+
+{% block content %}
+    <h1>Shoot</h1>
+
+    <table class="table table-striped table-hover table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ shoot.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ shoot.title }}</td>
+            </tr>
+            <tr>
+                <th>Start</th>
+                <td>{{ shoot.start ? shoot.start|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ shoot.description }}</td>
+            </tr>
+            <tr>
+                <th>Plateform</th>
+                <td>{{ shoot.plateform.nom }}</td>
+            </tr>
+            <tr>
+                <th>Annonceur</th>
+                <td>{{ shoot.annonceur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Campagne</th>
+                <td>{{ shoot.campagne.nom }}</td>
+            </tr>
+            <tr>
+                <th>Routeur</th>
+                <td>{{ shoot.routeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{{ shoot.volume }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a  class="btn btn-primary" href="{{ path('shoot_index') }}">Retour</a>
+
+    <a class="btn btn-primary" href="{{ path('shoot_edit', {'id': shoot.id}) }}">Modifier</a>
+
+    {{ include('shoot/_delete_form.html.twig') }}
+{% endblock %}

@@ -5,26 +5,81 @@
 {% endblock %}
 
 {% block content %}
+       <h1 class="title">{{ annonceur.nom }}</h1>
 
-    <div class="section">
-        <h1 class="title">{{ annonceur.nom }}</h1><hr>
-                    <p>{{ annonceur.nomDuContact }}</p>
-                    <p>{{ annonceur.skypeDuContact }}</p>
-                    <p>{{ annonceur.emailDuContact}}</p>
-                    <p>{{ annonceur.adresse }}</p>
-                    <p>{{ annonceur.codePostale }}</p>
-                    <p>{{ annonceur.ville }}</p>
-                    <p>{{ annonceur.telephone }}</p>
-                    <p>{{ annonceur.numeroSiret }}</p>
-                    <p>{{ annonceur.tva | number_format }}%</p>
-                    <p>{{ annonceur.emailComptabilite }}</p>
-                    <p>{{ annonceur.contactComptabilite }}</p>
-                    <p>
-                        <a href="{{ annonceur.urlPlateform }}" target="_blank">
-                            {{ annonceur.urlPlateform }}
-                        </a>
-                    </p>
-                    <p >{{ annonceur.mdpPlateform }}</p>
-                    
-    </div>
+    <table class="table table-striped table-hover table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ annonceur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ annonceur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Nom du contact</th>
+                <td>{{ annonceur.nomDuContact }}</td>
+            </tr>
+            <tr>
+                <th>Skype du contacte </th>
+                <td>{{ annonceur.skypeDuContact }}</td>
+            </tr>
+            <tr>
+                <th>Email du contact</th>
+                <td>{{ annonceur.emailDuContact}}</td>
+            </tr>
+            <tr>
+                <th>Adresse de l'annonceur</th>
+                <td>{{ annonceur.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Code Postale</th>
+                <td>{{ annonceur.codePostale }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ annonceur.ville }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ annonceur.telephone }}</td>
+            </tr>
+            <tr>
+                <th>N° Siret</th>
+                <td>{{ annonceur.numeroSiret }}</td>
+            </tr>
+            <tr>
+                <th>TVA</th>
+                <td>{{ annonceur.tva }}</td>
+            </tr>
+            <tr>
+                <th>Contact comptabilité</th>
+                <td>{{ annonceur.contactComptabilite }}</td>
+            </tr>
+            <tr>
+                <th>Email Comptabilité</th>
+                <td>{{ annonceur.emailComptabilite }}</td>
+            </tr>
+            <tr>
+                <th>Plateform</th>
+                <td>
+                    <a href="{{ annonceur.urlPlateform }}" target="_blank">
+                        {{ annonceur.urlPlateform }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Mot de passe</th>
+                <td>{{ annonceur.mdpPlateform }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a  class="btn btn-primary" href="{{ path('gestion_annonceur') }}">Retour</a>
+
+    <a class="btn btn-primary" href="{{ path('gestion_edit_annonceur', {'id': annonceur.id}) }}">Modifier</a>
+
+    <a href="{{ path('gestion_remove_annonceur', {id: annonceur.id, token: csrf_token('gestion_remove_annonceur')}) }}" class="btn btn-danger">Supprimer</a>
+
 {% endblock %}

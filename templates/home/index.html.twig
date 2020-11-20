@@ -24,8 +24,35 @@
               start: 'prev,next',
               center: 'title',
               end: 'dayGridMonth,timeGridWeek'
+          },
+          events: {{ data|raw }},
+          editable: true,
+          eventResizableFromStart: true,
+          dayMaxEvent: true,
+          eventClick: function(data){
+              var eventObj = data.event;
+              var url = `shoot/${data.event.id}`
+              window.open(url);
           }
+          
         });
+        calendar.on('eventChange', (e) => {
+            var url = `/api/${e.event.id}/edit`
+            var donnees = {
+                "title": e.event.title,
+                "start": e.event.start,
+                "plateform": e.event.extendedProps.plateform,
+                "campagne": e.event.extendedProps.campagne,
+                "routeur": e.event.extendedProps.routeur,
+                "volume": e.event.extendedProps.volume,
+                "annonceur": e.event.extendedProps.annonceur
+            }
+            var xhr = new XMLHttpRequest
+
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
+        })
+
         calendar.render();
       });
     </script>

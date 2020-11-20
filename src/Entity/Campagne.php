@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CampagneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Campagne
      * @ORM\Column(type="integer")
      */
     private $remuneration;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Shoot::class, mappedBy="campagne")
+     */
+    private $shoots;
+
+    public function __construct()
+    {
+        $this->shoots = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Campagne
     public function setRemuneration(int $remuneration): self
     {
         $this->remuneration = $remuneration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shoot[]
+     */
+    public function getShoots(): Collection
+    {
+        return $this->shoots;
+    }
+
+    public function addShoot(Shoot $shoot): self
+    {
+        if (!$this->shoots->contains($shoot)) {
+            $this->shoots[] = $shoot;
+            $shoot->setCampagne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoot(Shoot $shoot): self
+    {
+        if ($this->shoots->removeElement($shoot)) {
+            // set the owning side to null (unless already changed)
+            if ($shoot->getCampagne() === $this) {
+                $shoot->setCampagne(null);
+            }
+        }
 
         return $this;
     }

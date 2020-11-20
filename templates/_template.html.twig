@@ -9,7 +9,10 @@
 
         <ul class="list-unstyled components">
             <a href="{{ path('home') }}">
-            <p>Acceuil</p>
+            <p>Planning</p>
+            </a>
+            <a href="#">
+            <p>Resultat</p>
             </a>
             <li>
                 <a href="#plateform" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Plateform</a>
@@ -85,7 +88,21 @@
                 </ul>
             </li>
             <li>
-                <a href="#">Contact</a>
+                <a href="#shoot" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Shoot</a>
+                <ul class="collapse list-unstyled" id="shoot">
+                    <li>
+                        <a href="{{ path('shoot_index') }}">Liste des Shoot</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('shoot_new') }}">Programmer</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">contact</a>
             </li>
             <hr>
                 {% if is_granted("ROLE_SUPERADMIN") %}

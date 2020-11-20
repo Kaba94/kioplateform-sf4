@@ -1,0 +1,43 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Shoot index{% endblock %}
+
+{% block content %}
+    <h1>Liste des programmation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Plateform</th>
+                <th>Start</th>
+                <th>Description</th>
+                <th>Volume</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for shoot in shoots %}
+            <tr>
+                <td>{{ shoot.id }}</td>
+                <td>{{ shoot.title }}</td>
+                <td>{{ shoot.plateform.nom }}</td>
+                <td>{{ shoot.start ? shoot.start|date('d/m/Y H:i') : '' }}</td>
+                <td>{{ shoot.description }}</td>
+                <td>{{ shoot.volume }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('shoot_show', {'id': shoot.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('shoot_edit', {'id': shoot.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('shoot_new') }}">Create new</a>
+{% endblock %}
