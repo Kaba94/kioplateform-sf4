@@ -18,7 +18,9 @@
                     <td>{{ routeur.nom }}</td>
                     <td>
                         <a href="{{ path('gestion_edit_routeur', {id: routeur.id}) }}" class="btn btn-primary">Modifier</a>
+                        {% if is_granted("ROLE_SUPERADMIN") %}
                         <a href="{{ path('gestion_remove_routeur', {id: routeur.id, token: csrf_token('gestion_remove_routeur')}) }}" class="btn btn-danger">Supprimer</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -1,0 +1,70 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Resultat{% endblock %}
+
+{% block content %}
+    <h1>Resultat</h1>
+
+    <table class="table table-hover table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ resultat.id }}</td>
+            </tr>
+            <tr>
+                <th>Shoot</th>
+                <td>{{ resultat.shoot.title }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ resultat.shoot.start|date('d/m/Y H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Plateform</th>
+                <td>{{ resultat.shoot.plateform.nom }}</td>
+            </tr>
+            <tr>
+                <th>Routeur</th>
+                <td>{{ resultat.shoot.routeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>base</th>
+                <td>{{ resultat.shoot.base.nom }}</td>
+            </tr>
+            <tr>
+                <th>Annonceur</th>
+                <td>{{ resultat.shoot.annonceur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Camapgne</th>
+                <td>{{ resultat.shoot.campagne.nom }}</td>
+            </tr>
+            <tr>
+                <th>VolumeEnvoye</th>
+                <td>{{ resultat.volumeEnvoye }}</td>
+            </tr>
+            <tr>
+                <th>Resultat</th>
+                <td>{{ resultat.resultat }}</td>
+            </tr>
+            <tr>
+                <th>Dépense</th>
+                <td> {{ (resultat.volumeEnvoye * (resultat.shoot.prestation.prix / 100000))|number_format(2, '.', ' ') }}€  </td>
+            </tr>
+            <tr>
+                <th>Gain</th>
+                <td> {{ (resultat.resultat * (resultat.shoot.campagne.remuneration / 100))|number_format(2, '.', ' ') }}€  </td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td> {{ resultat.shoot.description }}  </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('resultat_index') }}">Retour</a>
+
+    <a class="btn btn-primary" href="{{ path('resultat_edit', {'id': resultat.id}) }}">Modifier</a>
+
+    {{ include('resultat/_delete_form.html.twig') }}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Routeur;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +27,14 @@ class RouteurFormType extends AbstractType
                 ])
             ]
         ])
+        ->add('plateforms', EntityType::class, [
+            'class' => 'App\Entity\Plateform', 
+            'choice_label' => 'nom',
+            'expanded' => true,
+            'multiple' => true,
+            'by_reference' => false,
+            'required' => false
+         ])
         ;
     }
 

@@ -1,4 +1,16 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.start) }}
+    {{ form_row(form.plateform) }}
+    {{ form_row(form.routeur) }}
+    {{ form_row(form.base) }}
+    {{ form_row(form.prestation) }}
+    {{ form_row(form.annonceur) }}
+    {{ form_row(form.campagne) }}
+    {{ form_row(form.volume) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.backgroundColor) }}
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+    

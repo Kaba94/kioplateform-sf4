@@ -17,3 +17,24 @@
         {{ form_end(prestationForm) }}
     </div>
 {% endblock %}
+{% block javascripts %}
+    <script>
+        var $prestation_form_plateform = $("#prestation_form_plateform")
+        var $token = $("#prestation_form_token")
+
+        $prestation_form_plateform.change(function ()
+        {
+            var $form = $(this).closest('form')
+            var data = {}
+            data[$token.attr('name')] = $token.val()
+            data[$prestation_form_plateform.attr('name')] = $prestation_form_plateform.val()
+
+            $.post($form.attr('action'), data).then(function (response)
+            {
+                $("#prestation_form_routeur").replaceWith(
+                    $(response).find("#prestation_form_routeur")
+                )
+            })
+        })
+    </script>
+    {% endblock %}

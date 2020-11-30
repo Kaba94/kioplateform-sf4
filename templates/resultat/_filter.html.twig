@@ -1,0 +1,14 @@
+{{ form_start(form, {attr: {class: 'filter'}}) }}
+    {{ form_row(form.q) }}
+    {{ form_row(form.routeur) }}
+    {{ form_row(form.base) }}
+    {{ form_row(form.annonceur) }}
+    {{ form_row(form.campagne) }}
+    {{ form_row(form.test) }}
+    <button type="submit" class="btn btn-primary">Filtrer</button>
+{{ form_end(form) }}
+
+<style>
+    .filter {
+    }
+</style>

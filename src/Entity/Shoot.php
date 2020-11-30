@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ShootRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ShootRepository::class)
+ * 
  */
 class Shoot
 {
@@ -71,6 +73,24 @@ class Shoot
      */
     private $annonceur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Base::class, inversedBy="shoots")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $base;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Prestation::class, inversedBy="shoots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $prestation;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Resultat::class, mappedBy="shoot", cascade={"persist", "remove"})
+     */
+    private $resultat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,7 +113,7 @@ class Shoot
         return $this->start;
     }
 
-    public function setStart(\DateTimeInterface $start): self
+    public function setStart($start): self
     {
         $this->start = $start;
 
@@ -105,7 +125,7 @@ class Shoot
         return $this->end;
     }
 
-    public function setEnd(?\DateTimeInterface $end): self
+    public function setEnd($end): self
     {
         $this->end = $end;
 
@@ -192,6 +212,47 @@ class Shoot
     public function setAnnonceur(?Annonceur $annonceur): self
     {
         $this->annonceur = $annonceur;
+
+        return $this;
+    }
+
+    public function getBase(): ?Base
+    {
+        return $this->base;
+    }
+
+    public function setBase(?Base $base): self
+    {
+        $this->base = $base;
+
+        return $this;
+    }
+
+    public function getPrestation(): ?Prestation
+    {
+        return $this->prestation;
+    }
+
+    public function setPrestation(?Prestation $prestation): self
+    {
+        $this->prestation = $prestation;
+
+        return $this;
+    }
+
+    public function getResultat(): ?Resultat
+    {
+        return $this->resultat;
+    }
+
+    public function setResultat(Resultat $resultat): self
+    {
+        $this->resultat = $resultat;
+
+        // set the owning side of the relation if necessary
+        if ($resultat->getShoot() !== $this) {
+            $resultat->setShoot($this);
+        }
 
         return $this;
     }

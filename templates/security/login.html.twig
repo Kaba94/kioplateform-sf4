@@ -1,6 +1,6 @@
 {% extends '_template.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Conexion{% endblock %}
 
 {% block content %}
 <form method="post">
@@ -34,9 +34,9 @@
             </label>
         </div>
     #}
-     {# un champ caché pour la protection des failles CSRF #}
     <button class="btn btn-primary form-control mt-3" type="submit">
         Conexion
     </button>
+    <a class="btn btn-primary mt-3" href="{{ path('app_register') }}">Inscription</a>
 </form>
 {% endblock %}

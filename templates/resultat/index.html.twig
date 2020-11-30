@@ -1,0 +1,48 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}Resultat{% endblock %}
+
+{% block content %}
+    <h1>Resultat</h1>
+    <div class="w-25">
+        {% include 'resultat/_filter.html.twig' with {form: form} only %}
+    </div>
+    <table class="table table-hover table-bordered ">
+        <thead>
+            <tr class="bg-dark text-light">
+                <th>Date</th>
+                <th>Shoot</th>
+                <th>routeur</th>
+                <th>Base</th>
+                <th>Annonceur</th>
+                <th>Campagne</th>
+                <th>Volume envoyé</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultat in resultats %}
+                <tr>
+                    <td>{{ resultat.shoot.start|date('d/m/Y H:i')}}</td>
+                    <td>{{ resultat.shoot.title }}</td>
+                    <td>{{ resultat.shoot.routeur.nom }}</td>
+                    <td>{{ resultat.shoot.base.nom }}</td>
+                    <td>{{ resultat.shoot.annonceur.nom }}</td>
+                    <td>{{ resultat.shoot.campagne.nom }}</td>
+                    <td>{{ resultat.volumeEnvoye }}</td>
+                    <td>{{ resultat.resultat }}</td>
+                    <td>               
+                        <a class="btn btn-primary" href="{{ path('resultat_show', {'id': resultat.id}) }}">Détail</a>
+                        <a class="btn btn-primary" href="{{ path('resultat_edit', {'id': resultat.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun Resultat</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('resultat_new') }}">Create new</a>
+{% endblock %}

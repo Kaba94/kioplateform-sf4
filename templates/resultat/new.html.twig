@@ -1,0 +1,11 @@
+{% extends '_template.html.twig' %}
+
+{% block title %}New Resultat{% endblock %}
+
+{% block content %}
+    <h1>Create new Resultat</h1>
+
+    {{ include('resultat/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('resultat_index') }}">back to list</a>
+{% endblock %}

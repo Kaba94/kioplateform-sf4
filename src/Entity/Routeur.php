@@ -39,11 +39,17 @@ class Routeur
      */
     private $shoots;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Plateform::class, mappedBy="routeur")
+     */
+    private $plateforms;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
         $this->bases = new ArrayCollection();
         $this->shoots = new ArrayCollection();
+        $this->plateforms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +154,33 @@ class Routeur
             if ($shoot->getRouteur() === $this) {
                 $shoot->setRouteur(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plateform[]
+     */
+    public function getPlateforms(): Collection
+    {
+        return $this->plateforms;
+    }
+
+    public function addPlateform(Plateform $plateform): self
+    {
+        if (!$this->plateforms->contains($plateform)) {
+            $this->plateforms[] = $plateform;
+            $plateform->addRouteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlateform(Plateform $plateform): self
+    {
+        if ($this->plateforms->removeElement($plateform)) {
+            $plateform->removeRouteur($this);
         }
 
         return $this;

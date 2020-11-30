@@ -45,7 +45,11 @@
                         <a href="{{ path('gestion_annonceur_page', {id: annonceur.id}) }}" class="btn btn-primary">Détail</a>
                         <a href="{{ path('gestion_edit_annonceur', {id: annonceur.id}) }}" class="btn btn-primary mt-1">Modifier</a>
                     </td>
-                    <td><a href="{{ path('gestion_remove_annonceur', {id: annonceur.id, token: csrf_token('gestion_remove_annonceur')}) }}" class="btn btn-danger">Supprimer</a></td>
+                    {% if is_granted("ROLE_SUPERADMIN") %}
+                        <td>    
+                            <a href="{{ path('gestion_remove_annonceur', {id: annonceur.id, token: csrf_token('gestion_remove_annonceur')}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

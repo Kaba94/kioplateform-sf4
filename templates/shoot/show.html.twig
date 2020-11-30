@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Shoot</h1>
 
-    <table class="table table-striped table-hover table-bordered">
+    <table class="table table-hover table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -20,13 +20,18 @@
                 <td>{{ shoot.start ? shoot.start|date('d/m/Y H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>Commentaire</th>
-                <td>{{ shoot.description }}</td>
-            </tr>
-            <tr>
                 <th>Plateform</th>
                 <td>{{ shoot.plateform.nom }}</td>
             </tr>
+            <tr>
+                <th>Routeur</th>
+                <td>{{ shoot.routeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Base</th>
+                <td>{{ shoot.base.nom }}</td>
+            </tr>
+
             <tr>
                 <th>Annonceur</th>
                 <td>{{ shoot.annonceur.nom }}</td>
@@ -36,9 +41,10 @@
                 <td>{{ shoot.campagne.nom }}</td>
             </tr>
             <tr>
-                <th>Routeur</th>
-                <td>{{ shoot.routeur.nom }}</td>
+                <th>Commentaire</th>
+                <td>{{ shoot.description }}</td>
             </tr>
+
             <tr>
                 <th>Volume</th>
                 <td>{{ shoot.volume }}</td>

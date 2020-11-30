@@ -25,12 +25,14 @@ class PlateformFormType extends AbstractType
                 ])
             ]
         ])
-        // ->add('user', EntityType::class, [
-        //     'class' => 'App\Entity\User', 
-        //     'choice_label' => 'pseudo',
-        //     'expanded' => true,
-        //     'multiple' => true
-        //  ]);
+        ->add('routeur', EntityType::class, [
+            'class' => 'App\Entity\Routeur', 
+            'choice_label' => 'nom',
+            'expanded' => true,
+            'multiple' => true,
+            'by_reference' => false,
+            'required' => false
+         ])
         ;
     }
 

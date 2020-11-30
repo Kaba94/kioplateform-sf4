@@ -9,3 +9,66 @@
 
     <a class="btn btn-primary mt-1" href="{{ path('shoot_index') }}">Retour</a>
 {% endblock %}
+{% block javascripts %}
+    <script>
+
+        // Sélection plateform
+        var $shoot_plateform = $("#shoot_plateform")
+        var $token = $("#shoot__token")
+
+        $shoot_plateform.change(function ()
+        {
+            var $form = $(this).closest('form')
+            var data = {}
+            data[$token.attr('name')] = $token.val()
+            data[$shoot_plateform.attr('name')] = $shoot_plateform.val()
+
+            $.post($form.attr('action'), data).then(function (response)
+            {
+                $("#shoot_routeur").replaceWith(
+                    $(response).find("#shoot_routeur")
+                )
+            })
+        })
+
+        // Sélection routeur
+        var $shoot_routeur = $("#shoot_routeur")
+
+        $shoot_routeur.change(function ()
+        {
+            var $form = $(this).closest('form')
+            var data = {}
+            data[$token.attr('name')] = $token.val()
+            data[$shoot_plateform.attr('name')] = $shoot_plateform.val()
+            data[$shoot_routeur.attr('name')] = $shoot_routeur.val()
+
+            $.post($form.attr('action'), data).then(function (response)
+            {
+                $("#shoot_base").replaceWith(
+                    $(response).find("#shoot_base")
+                )
+            })
+        })
+
+
+        // Sélection annonceur
+        var $shoot_annonceur = $("#shoot_annonceur")
+
+        $shoot_annonceur.change(function ()
+        {
+            var $form = $(this).closest('form')
+            var data = {}
+            data[$token.attr('name')] = $token.val()
+            data[$shoot_annonceur.attr('name')] = $shoot_annonceur.val()
+
+            $.post($form.attr('action'), data).then(function (response)
+            {
+                $("#shoot_campagne").replaceWith(
+                    $(response).find("#shoot_campagne")
+                )
+            })
+        })
+    </script>
+    
+
+    {% endblock %}

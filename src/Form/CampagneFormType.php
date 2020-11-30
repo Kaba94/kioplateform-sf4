@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Campagne;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,13 +51,7 @@ class CampagneFormType extends AbstractType
                 'class' => 'App\Entity\Annonceur', 
                 'choice_label' => 'nom' 
              ])
-            ->add('test', ChoiceType::class, [
-                'choices' => [
-                    "Oui"=>"1",
-                    "Non"=>"0",
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('test', CheckboxType::class, [
                 'label' => 'Test'
                 ])
         ;

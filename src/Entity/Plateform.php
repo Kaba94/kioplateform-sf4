@@ -46,12 +46,18 @@ class Plateform
      */
     private $shoots;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Routeur::class, inversedBy="plateforms")
+     */
+    private $routeur;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
         $this->user = new ArrayCollection();
         $this->base = new ArrayCollection();
         $this->shoots = new ArrayCollection();
+        $this->routeur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +187,30 @@ class Plateform
                 $shoot->setPlateform(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Routeur[]
+     */
+    public function getRouteur(): Collection
+    {
+        return $this->routeur;
+    }
+
+    public function addRouteur(Routeur $routeur): self
+    {
+        if (!$this->routeur->contains($routeur)) {
+            $this->routeur[] = $routeur;
+        }
+
+        return $this;
+    }
+
+    public function removeRouteur(Routeur $routeur): self
+    {
+        $this->routeur->removeElement($routeur);
 
         return $this;
     }
