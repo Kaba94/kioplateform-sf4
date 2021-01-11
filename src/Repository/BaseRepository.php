@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Base;
+use App\Entity\Resultat;
+use App\Entity\Shoot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,22 +21,25 @@ class BaseRepository extends ServiceEntityRepository
         parent::__construct($registry, Base::class);
     }
 
-    // /**
-    //  * @return Base[] Returns an array of Base objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Base[] Returns an array of Base objects
+      */
+    
+    public function findByvolume( $res)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('b', 'sh')
+            ->join('b.shoot', 'sh' )
+            ->join('sh.resultat', 're')
+            ->join('re.volumeEnvoye', 'vo')
+            ->andWhere('b.volumeEnvoye = :vo')
+            ->setParameter('vo', $res)
             ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Base

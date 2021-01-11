@@ -3,6 +3,7 @@
 {% block title %}Shoot index{% endblock %}
 
 {% block content %}
+{% include 'includes/flash.html.twig' %}
     <h1>Liste des programmation</h1>
 
     <table class="table">
@@ -14,7 +15,9 @@
                 <th>Start</th>
                 <th>Description</th>
                 <th>Volume</th>
-                <th>actions</th>
+                <th>Dépense</th>
+                <th>C.A</th>
+                <th>Bénéfice</th>
             </tr>
         </thead>
         <tbody>
@@ -26,9 +29,21 @@
                 <td>{{ shoot.start ? shoot.start|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ shoot.description }}</td>
                 <td>{{ shoot.volume }}</td>
+                {% if shoot.resultat != null %}
+                <td>{{ (shoot.resultat.volumeEnvoye * (shoot.prestation.prix / 100000))|number_format(2, '.', ' ') }}</td>
+                <td>{{ (shoot.resultat.resultat * (shoot.campagne.remuneration / 100))|number_format(2, '.', ' ') }}</td>
+                <td>{{ ((shoot.resultat.resultat * (shoot.campagne.remuneration / 100))-(shoot.resultat.volumeEnvoye * (shoot.prestation.prix / 100000)))|number_format(2, '.', ' ') }}</td>
+                {% else %}
+                 <td><div class="text-muted h6 small">En attente</div></td>
+                 <td><div class="text-muted h6 small">En attente</div></td>
+                 <td><div class="text-muted h6 small">En attente</div></td>
+                {% endif %}             
                 <td>
+                
                     <a class="btn btn-primary" href="{{ path('shoot_show', {'id': shoot.id}) }}">show</a>
+                    {% if is_granted("ROLE_SUPERADMIN") %}
                     <a class="btn btn-primary" href="{{ path('shoot_edit', {'id': shoot.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

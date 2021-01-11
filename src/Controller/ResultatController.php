@@ -47,6 +47,7 @@ class ResultatController extends AbstractController
             $entityManager->persist($resultat);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Resultat enregistré!');
             return $this->redirectToRoute('resultat_index');
         }
 
@@ -77,6 +78,7 @@ class ResultatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Resultat modifié!');
             return $this->redirectToRoute('resultat_index');
         }
 
@@ -97,6 +99,7 @@ class ResultatController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('danger', 'Resultat supprimé!');
         return $this->redirectToRoute('resultat_index');
     }
 }

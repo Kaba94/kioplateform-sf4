@@ -9,7 +9,10 @@
         <h1 class="title">Modifier le prix du Routeur</h1>
 
         {{ form_start(prestationForm) }}
-        {{ form_row(prestationForm) }}
+
+        {{ form_row(prestationForm.plateform) }}
+        {{ form_row(prestationForm.routeur) }}
+        {{ form_row(prestationForm.prix) }}
 
         <button type="submit" class="btn btn-primary fullwidth">
             Enregistrer
@@ -18,7 +21,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script>
+        <script>
         var $prestation_form_plateform = $("#prestation_form_plateform")
         var $token = $("#prestation_form_token")
 
@@ -37,4 +40,5 @@
             })
         })
     </script>
+
     {% endblock %}

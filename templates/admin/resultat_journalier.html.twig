@@ -1,12 +1,11 @@
-{% extends '_template.html.twig' %}
+{% extends 'admin/_template.html.twig' %}
 
-{% block title %}Resultat{% endblock %}
+{% block title %}Dashbord{% endblock %}
+
 
 {% block content %}
-{% include 'includes/flash.html.twig' %}
-    <h1>Resultat</h1>
+    <h1>Resultat journalier</h1>
     <div class="w-25">
-        {% include 'resultat/_filter.html.twig' with {form: form} only %}
     </div>
     <table class="table table-hover table-bordered ">
         <thead>
@@ -55,5 +54,4 @@
 
     <a class="btn btn-primary" href="{{ path('resultat_new') }}">Créer</a>
 {% endblock %}
-{% block javascripts %}
-{% endblock %}
+

@@ -41,6 +41,7 @@ class ShootController extends AbstractController
             $entityManager->persist($shoot);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Programmation enregistré!');
             return $this->redirectToRoute('shoot_index');
         }
 
@@ -71,6 +72,7 @@ class ShootController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Programmation modifié!');
             return $this->redirectToRoute('shoot_index');
         }
 
@@ -90,7 +92,7 @@ class ShootController extends AbstractController
             $entityManager->remove($shoot);
             $entityManager->flush();
         }
-
+        $this->addFlash('danger', 'Programmation supprimé!');
         return $this->redirectToRoute('shoot_index');
     }
 }

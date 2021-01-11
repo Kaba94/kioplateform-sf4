@@ -8,6 +8,7 @@ use App\Entity\Campagne;
 use App\Entity\Plateform;
 use App\Entity\Prestation;
 use App\Entity\Routeur;
+use App\Entity\Shoot;
 use App\Form\AnnonceurFormType;
 use App\Form\BaseFormType;
 use App\Form\CampagneFormType;
@@ -19,7 +20,9 @@ use App\Repository\BaseRepository;
 use App\Repository\CampagneRepository;
 use App\Repository\PlateformRepository;
 use App\Repository\PrestationRepository;
+use App\Repository\ResultatRepository;
 use App\Repository\RouteurRepository;
+use App\Repository\ShootRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,6 +121,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Plateform supprimé!');
         return $this->redirectToRoute('gestion_plateform');
     }
 
@@ -199,6 +203,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Routeur supprimé!');
         return $this->redirectToRoute('gestion_routeur');
     }
 
@@ -218,6 +223,7 @@ class GestionController extends AbstractController
             $manager->persist($prestation); 
             $manager->flush(); 
 
+        $this->addFlash('success', 'Prestation affecté!');   
         return $this->redirectToRoute('gestion_list_prestation'); 
         } 
 
@@ -250,7 +256,7 @@ class GestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $manager->flush();
 
-            $this->addFlash('success', 'Le prix a été mis à jour.');
+            $this->addFlash('success', 'La prestation a été mis à jour.');
 
             return $this->redirectToRoute('gestion_list_prestation');
         }
@@ -279,6 +285,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Prestation supprimé!');
         return $this->redirectToRoute('gestion_list_prestation');
     }
 
@@ -373,6 +380,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Annonceur supprimé!');
         return $this->redirectToRoute('gestion_annonceur');
     }
 
@@ -427,7 +435,7 @@ class GestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $manager->flush();
 
-            $this->addFlash('success', 'La campagne');
+            $this->addFlash('success', 'La campagne à été mis à jour !');
             return $this->redirectToRoute('gestion_campagne');
         }
 
@@ -455,6 +463,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Campagne supprimé!');
         return $this->redirectToRoute('gestion_campagne');
     }
 
@@ -509,7 +518,7 @@ class GestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $manager->flush();
 
-            $this->addFlash('success', 'La base');
+            $this->addFlash('success', 'La base à été modifié !');
             return $this->redirectToRoute('gestion_base');
         }
 
@@ -537,6 +546,7 @@ class GestionController extends AbstractController
             $manager->flush();
         }
         // redirection
+        $this->addFlash('danger', 'Base supprimé!');
         return $this->redirectToRoute('gestion_base');
     }
 

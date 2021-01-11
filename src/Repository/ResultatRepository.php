@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Data\SearchData;
 use App\Entity\Resultat;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -69,6 +70,43 @@ class ResultatRepository extends ServiceEntityRepository
             }
         return $query->getQuery()->getResult();
     }
+
+    public function findbyMonth()
+    {
+        return $this->createQueryBuilder('re')
+            ->select('re', 'sh')
+            ->join('re.shoot', 'sh')      
+            ->where('SUBSTRING(sh.start, 1, 8) >= :last_month ')
+            ->setParameter('last_month', new \DateTime('-1 month'))
+            ->orderBy('sh.start', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findbyDay()
+    {
+        return $this->createQueryBuilder('re')
+            ->select('re', 'sh')
+            ->join('re.shoot', 'sh')      
+            ->where('SUBSTRING(sh.start, 1, 10) >= :last_day ')
+            ->setParameter('last_day', new \DateTime('-1 day'))
+            ->orderBy('sh.start', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * recupére le nombre de resultat par jour
+     */
+    public function countByDate(){
+        $query = $this->createQueryBuilder('re')
+            ->join('re.shoot', 'sh')
+            ->select('SUBSTRING(sh.start, 1, 10) as dateResultat')
+            ->groupBy('dateResultat')
+            ->setMaxResults(10);
+
+            return $query->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Resultat[] Returns an array of Resultat objects

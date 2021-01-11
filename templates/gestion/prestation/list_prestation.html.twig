@@ -19,11 +19,13 @@
                     <td>{{ prestation.id }}</td>
                     <td>{{ prestation.plateform.nom }}</td>
                     <td>{{ prestation.routeur.nom }}</td>
-                    <td>{{ prestation.prix / 100000}}</td>
+                    <td>{{ prestation.prix|number_format(6, '.', ' ') / 100000}}</td>
+                    {% if is_granted("ROLE_SUPERADMIN") %}
                     <td>
                         <a href="{{ path('gestion_edit_prestation', {id: prestation.id}) }}" class="btn btn-primary">Modifier</a>
                         <a href="{{ path('gestion_remove_prestation', {id: prestation.id, token: csrf_token('gestion_remove_prestation')}) }}" class="btn btn-danger">Supprimer</a>
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
